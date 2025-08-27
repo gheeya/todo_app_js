@@ -39,6 +39,9 @@ function createTodo({ id, todo, active }) {
   todoEle.classList.add("todo-element");
   tForm.classList.add("t-form");
   tInput.classList.add("t-input");
+  tCheckInput.classList.add("t-input-checkbox");
+  tCheckInput.setAttribute("name", "input-checkbox");
+  tInput.setAttribute("name", "input-todo");
   todoEle.dataset.key = id;
   todoEle.dataset.status = active;
   tInput.value = todo;
@@ -50,6 +53,16 @@ function removeTodo(id) {
   todoArr.forEach((todo) => {
     if (todo.dataset.key === id) {
       todoContainer.removeChild(todo);
+    }
+  });
+}
+
+function updateTodo(id, body) {
+  const todoArr = [...document.querySelectorAll(".todo-element")];
+  todoArr.forEach((todo) => {
+    if (todo.dataset.key === id) {
+      const tInput = todo.querySelector(".t-input");
+      tInput.value = body;
     }
   });
 }
@@ -71,6 +84,17 @@ function deleteTodo(id) {
   removeTodo(id);
 }
 
+// Edit Functionality
+function editTodo(id, body) {
+  todos = todos.map((todo) => {
+    if (todo.id === id) {
+      return { ...todo, todo: body };
+    }
+    return todo;
+  });
+  updateTodo(id, body);
+}
+
 // Event Listener
 todoForm.addEventListener("submit", function (evt) {
   evt.preventDefault();
@@ -84,4 +108,29 @@ todoContainer.addEventListener("click", function (evt) {
   if (evt.target.classList.contains("delete-btn")) {
     deleteTodo(todo.dataset.key);
   }
+  if (evt.target.classList.contains("edit-btn")) {
+    const tInput = todo.querySelector(".t-input");
+    const tCheckInput = todo.querySelector(".t-input-checkbox");
+    tCheckInput.disabled = !tCheckInput.disabled;
+    tInput.readOnly = !tInput.readOnly;
+    tInput.classList.toggle("active");
+  }
+});
+
+todoContainer.addEventListener("submit", function (evt) {
+  evt.preventDefault();
+  const todo = evt.target.closest(".todo-element");
+  const tInput = todo.querySelector(".t-input");
+  const tCheckInput = todo.querySelector(".t-input-checkbox");
+
+  const formData = new FormData(evt.target);
+  const data = [];
+  for (let value of formData) {
+    data.push(value);
+  }
+  editTodo(todo.dataset.key, data[0][1]);
+  tInput.readOnly = !tInput.readOnly;
+  tCheckInput.disabled = !tCheckInput.disabled;
+  tInput.classList.toggle("active");
+  tInput.blur();
 });
