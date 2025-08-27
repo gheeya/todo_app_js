@@ -5,7 +5,7 @@
  *      active:true/false
  * }
  */
-const todos = [];
+let todos = [];
 
 const todoForm = document.querySelector("form");
 const todoInput = document.querySelector(".todo-input");
@@ -45,6 +45,15 @@ function createTodo({ id, todo, active }) {
   todoContainer.appendChild(todoEle);
 }
 
+function removeTodo(id) {
+  const todoArr = [...document.querySelectorAll(".todo-element")];
+  todoArr.forEach((todo) => {
+    if (todo.dataset.key === id) {
+      todoContainer.removeChild(todo);
+    }
+  });
+}
+
 // Add functionality
 function addTodo(value) {
   const todo = {
@@ -56,9 +65,23 @@ function addTodo(value) {
   todos.push(todo);
 }
 
+// Delete Funtionality
+function deleteTodo(id) {
+  todos = todos.filter((todo) => todo.id !== id);
+  removeTodo(id);
+}
+
 // Event Listener
 todoForm.addEventListener("submit", function (evt) {
   evt.preventDefault();
   todoInput.value && addTodo(todoInput.value);
   todoInput.value = "";
+  todoInput.blur();
+});
+
+todoContainer.addEventListener("click", function (evt) {
+  const todo = evt.target.closest(".todo-element");
+  if (evt.target.classList.contains("delete-btn")) {
+    deleteTodo(todo.dataset.key);
+  }
 });

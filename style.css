@@ -64,6 +64,12 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: default;
+}
+
+.edit-btn:hover {
+  font-weight: bolder;
+  text-shadow: 10px 10px 10px rgba(0, 0, 255, 0.15);
 }
 
 .delete-btn {
@@ -74,4 +80,10 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: default;
+}
+
+.delete-btn:hover {
+  font-weight: bolder;
+  text-shadow: 10px 10px 10px rgba(255, 0, 0, 0.15);
 }
