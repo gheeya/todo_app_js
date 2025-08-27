@@ -29,8 +29,12 @@ body {
 .t-input {
   padding: 2px;
   border: none;
-  width: 200px;
+  width: 350px;
   height: 25px;
+}
+
+.t-input {
+  outline: none;
 }
 
 .todo-element {
@@ -44,5 +48,30 @@ body {
   display: flex;
   justify-content: start;
   padding: 5px;
+  align-items: center;
+}
+
+.btn-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.edit-btn {
+  height: 100%;
+  width: 100%;
+  color: blue;
+  font-size: larger;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.delete-btn {
+  height: 100%;
+  width: 100%;
+  color: red;
+  font-size: larger;
+  display: flex;
+  justify-content: center;
   align-items: center;
 }

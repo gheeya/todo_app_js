@@ -19,6 +19,12 @@ function createTodo({ id, todo, active }) {
   const tBtnContainer = document.createElement("div");
   const tCheckInput = document.createElement("input");
   const tInput = document.createElement("input");
+  const editBtn = document.createElement("span");
+  const deleteBtn = document.createElement("span");
+  editBtn.innerHTML = "&#128393;";
+  deleteBtn.innerHTML = "&#128465;";
+  editBtn.classList.add("edit-btn");
+  deleteBtn.classList.add("delete-btn");
   tCheckInput.setAttribute("type", "checkbox");
   tInput.readOnly = true;
   todoEle.appendChild(tForm);
@@ -26,8 +32,10 @@ function createTodo({ id, todo, active }) {
   tForm.appendChild(tBtnContainer);
   tInputContainer.appendChild(tCheckInput);
   tInputContainer.appendChild(tInput);
+  tBtnContainer.appendChild(editBtn);
+  tBtnContainer.appendChild(deleteBtn);
   tInputContainer.classList.add("container");
-  tBtnContainer.classList.add("container");
+  tBtnContainer.classList.add("btn-container");
   todoEle.classList.add("todo-element");
   tForm.classList.add("t-form");
   tInput.classList.add("t-input");
@@ -40,7 +48,7 @@ function createTodo({ id, todo, active }) {
 // Add functionality
 function addTodo(value) {
   const todo = {
-    id: String(new Date()).slice(1),
+    id: String(Date.now()).slice(1),
     todo: value,
     active: true,
   };
